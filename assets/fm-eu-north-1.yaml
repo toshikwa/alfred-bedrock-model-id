@@ -1,8 +1,0 @@
-- modelId: "amazon.titan-embed-text-v2:0"
-  modelName: "Titan Text Embeddings V2"
-- modelId: "amazon.nova-pro-v1:0"
-  modelName: "Nova Pro"
-- modelId: "amazon.nova-lite-v1:0"
-  modelName: "Nova Lite"
-- modelId: "amazon.nova-micro-v1:0"
-  modelName: "Nova Micro"

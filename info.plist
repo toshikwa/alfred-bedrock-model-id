@@ -79,7 +79,7 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>e.g. `bm us-west-2 nova`, `bm us-east-1 cri sonnet`</string>
+				<string>e.g. `bm nova`, `bm us sonnet`</string>
 				<key>title</key>
 				<string>Search for the Bedrock model ID</string>
 				<key>type</key>
@@ -163,7 +163,7 @@ end alfred_script</string>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>0.0.1</string>
+	<string>0.0.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/toshikwa/alfred-bedrock-model-id</string>
 </dict>

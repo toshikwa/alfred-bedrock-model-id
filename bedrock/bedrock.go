@@ -13,9 +13,8 @@ type Model struct {
 	Name string `yaml:"modelName"`
 	Id   string `yaml:"modelId"`
 }
-type Models map[string]string
 
-func LoadModels(wf *aw.Workflow, yamlPath string, isCri bool) {
+func LoadModels(wf *aw.Workflow, yamlPath string) {
 	// load models from yaml
 	yamlFile, err := os.ReadFile(yamlPath)
 	if err != nil {
@@ -31,9 +30,6 @@ func LoadModels(wf *aw.Workflow, yamlPath string, isCri bool) {
 		name := model.Name
 		id := model.Id
 		match := name + " " + strings.ReplaceAll(strings.Join(strings.Split(id, "."), " "), "-", ".")
-		if isCri {
-			match = "cri " + match + "cri"
-		}
 		wf.
 			NewItem(name).
 			Valid(true).

@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# initialize output files
+OUTPUT_FILE="assets/models.yaml"
+TMP_FILE="assets/models.json"
+
+> $OUTPUT_FILE
+> $TMP_FILE
+
 # regions to check
 REGIONS=(
   "us-east-1"
@@ -40,12 +47,17 @@ for region in "${REGIONS[@]}"; do
   echo "Checking region: $region"
   if models=$(aws bedrock list-foundation-models --region $region --query "modelSummaries[*].{modelId:modelId,modelName:modelName}" --output json 2>/dev/null); then
     if [ -n "$models" ] && [ "$models" != "[]" ]; then
-      echo "$models" | jq -c '.[]' | jq -r 'select((.modelId | split(":") | length) < 3) | "- modelId: \"" + .modelId + "\"\n  modelName: \"" + .modelName + "\""' > "assets/fm-$region.yaml"
+      echo "$models" | jq -c '.[]' >> $TMP_FILE
     fi
   fi
-  if profiles=$(aws bedrock list-inference-profiles --region $region --query "inferenceProfileSummaries[*].{modelId:inferenceProfileId,modelName:inferenceProfileName}" --output json 2>/dev/null); then
-    if [ -n "$profiles" ] && [ "$profiles" != "[]" ]; then
-      echo "$profiles" | jq -c '.[]' | jq -r 'select((.modelId | split(":") | length) < 3) | "- modelId: \"" + .modelId + "\"\n  modelName: \"" + .modelName + "\""' > "assets/cri-$region.yaml"
+  if models=$(aws bedrock list-inference-profiles --region $region --query "inferenceProfileSummaries[*].{modelId:inferenceProfileId,modelName:inferenceProfileName}" --output json 2>/dev/null); then
+    if [ -n "$models" ] && [ "$models" != "[]" ]; then
+      echo "$models" | jq -c '.[]' >> $TMP_FILE
     fi
   fi
 done
+
+# remove duplicates
+cat $TMP_FILE | jq -s 'unique_by(.modelId) | .[]' | \
+  jq -r 'select((.modelId | split(":") | length) < 3) | "- modelId: \"" + .modelId + "\"\n  modelName: \"" + .modelName + "\""' >> $OUTPUT_FILE
+rm $TMP_FILE

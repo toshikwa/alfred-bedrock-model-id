@@ -11,9 +11,9 @@ Installation can be done as follows.
 
 ## Usage
 
-Type `bm [region name] [model name]` to find the model id. (e.g. `bm us-east-1 sonnet 3.7`)
-- `bm` stands for "Bedrock Model", making it easy to remember.
+Type `bm [model name]` to find the model id. (e.g. `bm sonnet 3.7` or `bm apac nova`)
 
+- `bm` stands for "Bedrock Model", making it easy to remember.
 
 > [!NOTE]
 > You can resolve a message `"alfred-bedrock-model-id" cannot be opened because the developer cannot be verified` as follows.
