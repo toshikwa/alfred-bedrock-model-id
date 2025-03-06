@@ -1,0 +1,2 @@
+- modelId: "amazon.titan-embed-text-v2:0"
+  modelName: "Titan Text Embeddings V2"
