@@ -44,7 +44,7 @@ func run() {
 	// filter models by query
 	args := flag.Args()
 	if len(args) > 0 {
-		query = strings.TrimSpace(strings.Join(args[1:], " "))
+		query = strings.TrimSpace(strings.Join(args[0:], " "))
 		if query != "" {
 			wf.Filter(query)
 		}
