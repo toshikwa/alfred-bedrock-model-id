@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
+	"os/exec"
 	"strings"
 
 	aw "github.com/deanishe/awgo"
@@ -29,6 +31,7 @@ func init() {
 func run() {
 	wf.Args()
 	flag.Parse()
+	defer finalize()
 
 	// check for update
 	if doCheck {
@@ -39,7 +42,15 @@ func run() {
 		}
 		return
 	}
-	defer finalize()
+
+	// execute command to check
+	if wf.UpdateCheckDue() && !wf.IsRunning(checkForUpdateJob) {
+		log.Println("Running update check in background...")
+		cmd := exec.Command(os.Args[0], "-check")
+		if err := wf.RunInBackground(checkForUpdateJob, cmd); err != nil {
+			log.Printf("Error starting update check: %s", err)
+		}
+	}
 
 	// filter models by query
 	args := flag.Args()
