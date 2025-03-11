@@ -25,7 +25,6 @@ var (
 func init() {
 	flag.BoolVar(&doCheck, "check", false, "check for a new version")
 	wf = aw.New(update.GitHub(repo))
-	bedrock.LoadModels(wf, "./assets/models.yaml")
 }
 
 func run() {
@@ -52,13 +51,27 @@ func run() {
 		}
 	}
 
-	// filter models by query
+	// query
 	args := flag.Args()
-	if len(args) > 0 {
-		query = strings.TrimSpace(strings.Join(args[0:], " "))
-		if query != "" {
-			wf.Filter(query)
+	query := strings.TrimSpace(strings.Join(args[0:], " "))
+
+	if query == "" || strings.HasPrefix("update", query) {
+		// update
+		if wf.UpdateAvailable() {
+			wf.Configure(aw.SuppressUIDs(true))
+			wf.NewItem("[alfred-bedrock-model-id] An update is available!!").
+				Subtitle("Press Enter to install update").
+				Valid(false).
+				Autocomplete("workflow:update").
+				Icon(updateIcon)
+		} else {
+			wf.NewItem("Search for Bedrock model ID...").
+				Subtitle("e.g. `bm us sonnet`, `bm apac nova`")
 		}
+	} else {
+		// filter models
+		bedrock.LoadModels(wf, "./assets/models.yaml")
+		wf.Filter(query)
 	}
 }
 
