@@ -23,7 +23,9 @@ jobs:
         run: go mod download
 
       - name: Build
-        run: make
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          make VERSION=$VERSION
 
       - name: Create release
         id: create_release
