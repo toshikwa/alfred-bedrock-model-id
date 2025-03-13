@@ -1,4 +1,4 @@
-name: Daily PR for auto-updating model IDs
+name: Daily PR
 
 on:
   # Run daily
