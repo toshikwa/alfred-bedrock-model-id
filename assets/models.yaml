@@ -204,3 +204,5 @@
   modelName: "US Meta Llama 3.2 90B Instruct"
 - modelId: "us.meta.llama3-3-70b-instruct-v1:0"
   modelName: "US Meta Llama 3.3 70B Instruct"
+- modelId: "us.mistral.pixtral-large-2502-v1:0"
+  modelName: "US Mistral Pixtral Large 25.02"
