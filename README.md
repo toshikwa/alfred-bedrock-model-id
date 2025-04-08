@@ -23,3 +23,9 @@ Type `bm [model name]` to find the model id. (e.g. `bm sonnet 3.7` or `bm apac n
 > - go to "System Preferences" > "Privacy & Security"
 > - click "Allow Anyway" to allow the binary to execute
 > - click "Open" when you use the tool for the first time
+
+## Update
+
+When an update is available, you will see an update notification as shown in the image below. Simply press Enter to install the update.
+
+<img width="750" alt="Image" src="https://github.com/user-attachments/assets/508e0882-a96a-4e4c-a2e4-de614816352d" />
