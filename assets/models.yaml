@@ -172,6 +172,8 @@
   modelName: "SD3 Large 1.0"
 - modelId: "stability.stable-diffusion-xl-v1"
   modelName: "SDXL 1.0"
+- modelId: "stability.stable-diffusion-xl-v1:0"
+  modelName: "SDXL 1.0"
 - modelId: "stability.stable-image-core-v1:0"
   modelName: "Stable Image Core 1.0"
 - modelId: "stability.stable-image-core-v1:1"
