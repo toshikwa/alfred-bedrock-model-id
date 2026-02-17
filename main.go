@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/deanishe/awgo/update"
@@ -14,16 +15,18 @@ import (
 
 var (
 	doCheck           bool
-	region            string
-	query             string
+	doFetch           bool
 	updateIcon        = &aw.Icon{Value: "assets/update-available.png"}
 	repo              = "toshikwa/alfred-bedrock-model-id"
 	checkForUpdateJob = "checkForUpdate"
+	fetchModelsJob    = "fetchModels"
+	maxCacheAge       = 24 * time.Hour
 	wf                *aw.Workflow
 )
 
 func init() {
 	flag.BoolVar(&doCheck, "check", false, "check for a new version")
+	flag.BoolVar(&doFetch, "fetch", false, "fetch latest models from GitHub")
 	wf = aw.New(update.GitHub(repo))
 }
 
@@ -42,12 +45,31 @@ func run() {
 		return
 	}
 
-	// execute command to check
+	// fetch models from GitHub
+	if doFetch {
+		wf.Configure(aw.TextErrors(true))
+		log.Println("Fetching latest models from GitHub...")
+		if err := bedrock.FetchModels(wf); err != nil {
+			wf.FatalError(err)
+		}
+		return
+	}
+
+	// run update check in background
 	if wf.UpdateCheckDue() && !wf.IsRunning(checkForUpdateJob) {
 		log.Println("Running update check in background...")
 		cmd := exec.Command(os.Args[0], "-check")
 		if err := wf.RunInBackground(checkForUpdateJob, cmd); err != nil {
 			log.Printf("Error starting update check: %s", err)
+		}
+	}
+
+	// run model fetch in background if cache is stale
+	if !wf.IsRunning(fetchModelsJob) && wf.Cache.Expired(bedrock.CacheFileName, maxCacheAge) {
+		log.Println("Running model fetch in background...")
+		cmd := exec.Command(os.Args[0], "-fetch")
+		if err := wf.RunInBackground(fetchModelsJob, cmd); err != nil {
+			log.Printf("Error starting model fetch: %s", err)
 		}
 	}
 
@@ -70,7 +92,7 @@ func run() {
 		}
 	} else {
 		// filter models
-		bedrock.LoadModels(wf, "./assets/models.yaml")
+		bedrock.LoadModels(wf)
 		wf.Filter(query)
 	}
 }
