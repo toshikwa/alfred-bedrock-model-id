@@ -358,6 +358,8 @@
   modelName: "US Anthropic Claude 3 Haiku"
 - modelId: "us.anthropic.claude-3-sonnet-20240229-v1:0"
   modelName: "US Anthropic Claude 3 Sonnet"
+- modelId: "us.anthropic.claude-fable-5"
+  modelName: "US Anthropic Claude Fable 5"
 - modelId: "us.anthropic.claude-haiku-4-5-20251001-v1:0"
   modelName: "US Anthropic Claude Haiku 4.5"
 - modelId: "us.anthropic.claude-opus-4-1-20250805-v1:0"
