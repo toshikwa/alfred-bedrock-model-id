@@ -92,6 +92,8 @@
   modelName: "APAC TwelveLabs Marengo Embed v2.7"
 - modelId: "apac.twelvelabs.pegasus-1-2-v1:0"
   modelName: "APAC Pegasus v1.2"
+- modelId: "au.anthropic.claude-fable-5"
+  modelName: "AU Anthropic Claude Fable 5"
 - modelId: "au.anthropic.claude-haiku-4-5-20251001-v1:0"
   modelName: "AU Anthropic Claude Haiku 4.5"
 - modelId: "au.anthropic.claude-opus-4-6-v1"
