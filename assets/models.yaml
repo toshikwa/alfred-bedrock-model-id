@@ -112,6 +112,8 @@
   modelName: "AU Anthropic Claude Sonnet 5.5"
 - modelId: "ca.amazon.nova-lite-v1:0"
   modelName: "CA Nova Lite"
+- modelId: "ca.anthropic.claude-haiku-5-5"
+  modelName: "CA Anthropic Claude Haiku 5.5"
 - modelId: "cohere.embed-english-v3"
   modelName: "Embed English"
 - modelId: "cohere.embed-multilingual-v3"
